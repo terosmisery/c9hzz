@@ -89,8 +89,10 @@ g55.BackgroundColor3 = Color3.fromRGB(25, 26, 31)
 g55.BorderSizePixel = 0
 g55.ZIndex = 50
 
+-- keep the top corners rounded
 addCorner(g55, 8)
 
+-- flatten only the lower edge of the topbar
 local topbarFill = make("Frame", "TopbarFill", g55)
 topbarFill.Position = UDim2.new(0, 0, 1, -8)
 topbarFill.Size = UDim2.new(1, 0, 0, 8)
@@ -107,15 +109,14 @@ topbarLine.ZIndex = 51
 
 --// Green status glow
 
-local glowLayers = {
-	{32, 0.96},
-	{27, 0.92},
-	{22, 0.86},
-	{17, 0.72},
-	{13, 0.48},
+local glowSizes = {
+	{30, 0.94},
+	{24, 0.88},
+	{19, 0.78},
+	{14, 0.55},
 }
 
-for i, data in ipairs(glowLayers) do
+for i, data in ipairs(glowSizes) do
 	local glow = make("Frame", "Glow_" .. i, g55)
 	glow.AnchorPoint = Vector2.new(0.5, 0.5)
 	glow.Position = UDim2.new(0, 17, 0.5, 0)
@@ -134,9 +135,10 @@ statusCircle.Size = UDim2.new(0, 8, 0, 8)
 statusCircle.BackgroundColor3 = Color3.fromRGB(70, 255, 110)
 statusCircle.BorderSizePixel = 0
 statusCircle.ZIndex = 56
+
 addCorner(statusCircle, 8)
 
---// Title text
+--// Topbar title
 -- moved farther away from the glow
 
 local g58 = make("TextLabel", "Label", g55)
@@ -217,7 +219,6 @@ local homeIcon = makeIcon(
 )
 
 --// Files / scripts
--- Document-style atlas sprite.
 
 local scriptsButton = makeButton(
 	sidebar,
@@ -232,7 +233,7 @@ local scriptsIcon = makeIcon(
 	scriptsButton,
 	"ScriptsIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(804, 404),
+	Vector2.new(804, 284),
 	23
 )
 
@@ -270,7 +271,7 @@ local settingsIcon = makeIcon(
 	settingsButton,
 	"SettingsIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(4, 4),
+	Vector2.new(324, 124),
 	23
 )
 
@@ -278,8 +279,8 @@ local function updateSettingsPosition()
 	settingsButton.Position = UDim2.new(
 		0,
 		11,
-		1,
-		-58
+		0,
+		sidebar.AbsoluteSize.Y - 58
 	)
 end
 
@@ -394,6 +395,7 @@ g9.TextColor3 = Color3.fromRGB(75, 81, 91)
 g9.TextSize = 14
 g9.TextXAlignment = Enum.TextXAlignment.Right
 g9.TextYAlignment = Enum.TextYAlignment.Top
+g9.RichText = false
 
 --// Source
 
@@ -517,110 +519,91 @@ g18.TextSize = 14
 --// Right-side buttons
 -- 8px gap between every button.
 
-local g36 = makeButton(
-	controls,
+local rightX = 0
+
+local function makeRightButton(name, offsetFromRight, asset, rectOffset, rectSize)
+	local b = makeButton(
+		controls,
+		name,
+		0,
+		2,
+		34,
+		36
+	)
+
+	b.AnchorPoint = Vector2.new(1, 0)
+	b.Position = UDim2.new(1, -offsetFromRight, 0, 2)
+
+	local icon = make("ImageLabel", "Icon", b)
+	icon.AnchorPoint = Vector2.new(0.5, 0.5)
+	icon.Position = UDim2.new(0.5, 0, 0.5, 0)
+	icon.Size = UDim2.new(0, 22, 0, 22)
+	icon.BackgroundTransparency = 1
+	icon.BorderSizePixel = 0
+	icon.ZIndex = 32
+	icon.Image = asset
+	icon.ImageColor3 = Color3.new(1, 1, 1)
+
+	if rectOffset then
+		icon.ImageRectOffset = rectOffset
+	end
+
+	if rectSize then
+		icon.ImageRectSize = rectSize
+	end
+
+	return b
+end
+
+local g36 = makeRightButton(
 	"R6Button",
 	0,
-	2,
-	34,
-	36
-)
-g36.AnchorPoint = Vector2.new(1, 0)
-g36.Position = UDim2.new(1, -10, 0, 2)
-
-local g39 = makeIcon(
-	g36,
-	"R6Icon",
 	"rbxassetid://4941166750",
-	Vector2.new(0, 0),
-	25
+	nil,
+	nil
 )
 
-local g41 = makeButton(
-	controls,
+local g41 = makeRightButton(
 	"REButton",
-	0,
-	2,
-	34,
-	36
-)
-g41.AnchorPoint = Vector2.new(1, 0)
-g41.Position = UDim2.new(1, -52, 0, 2)
-
-local g44 = makeIcon(
-	g41,
-	"REIcon",
+	42,
 	"rbxassetid://7072721335",
-	Vector2.new(0, 0),
-	22
+	nil,
+	nil
 )
 
--- This is the RESET/REPEAT button.
--- It uses the repeat asset, not the people icon.
-
-local g59 = makeButton(
-	controls,
+local g59 = makeRightButton(
 	"REButton2",
-	0,
-	2,
-	34,
-	36
-)
-g59.AnchorPoint = Vector2.new(1, 0)
-g59.Position = UDim2.new(1, -94, 0, 2)
-
-local g62 = makeIcon(
-	g59,
-	"RepeatIcon",
+	84,
 	"rbxassetid://10734933966",
-	Vector2.new(0, 0),
-	22
+	nil,
+	nil
 )
 
--- Hide
-
-local g31 = makeButton(
-	controls,
+local g31 = makeRightButton(
 	"HideButton",
-	0,
-	2,
-	34,
-	36
-)
-g31.AnchorPoint = Vector2.new(1, 0)
-g31.Position = UDim2.new(1, -136, 0, 2)
-
-local hideIcon = makeIcon(
-	g31,
-	"HideIcon",
+	126,
 	"rbxassetid://3926307971",
 	Vector2.new(84, 44),
-	22
+	Vector2.new(36, 36)
 )
 
---// Show button
+--// Restore button
 
-local g48 = makeButton(
-	g1,
-	"ShowButton",
-	0,
-	0,
-	42,
-	42
-)
-
+local g48 = makeButton(g1, "ShowButton", 0, 0, 42, 42)
 g48.AnchorPoint = Vector2.new(0, 1)
 g48.Position = UDim2.new(0, 15, 1, -15)
 g48.ZIndex = 100
 g48.Visible = false
 
-local showIcon = makeIcon(
-	g48,
-	"ShowIcon",
-	"rbxassetid://3926307971",
-	Vector2.new(564, 44),
-	24
-)
+local showIcon = make("ImageLabel", "ImageLabel", g48)
+showIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+showIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+showIcon.Size = UDim2.new(0, 24, 0, 24)
+showIcon.BackgroundTransparency = 1
+showIcon.ZIndex = 101
+showIcon.Image = "rbxassetid://3926307971"
+showIcon.ImageRectOffset = Vector2.new(564, 44)
+showIcon.ImageRectSize = Vector2.new(36, 36)
 
 --// Line numbers
 
@@ -647,7 +630,9 @@ local function updateLineNumbers()
 	g9.Text = table.concat(lines, "\n")
 end
 
---// Syntax colors
+g10:GetPropertyChangedSignal("Text"):Connect(updateLineNumbers)
+
+--// Visual syntax layers
 
 local function updateSyntax()
 	local text = g10.Text
@@ -693,7 +678,6 @@ local function updateSyntax()
 	)
 end
 
-g10:GetPropertyChangedSignal("Text"):Connect(updateLineNumbers)
 g10:GetPropertyChangedSignal("Text"):Connect(updateSyntax)
 
 --// Sidebar selection
