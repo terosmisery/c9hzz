@@ -5,11 +5,6 @@ local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
 -- Original module behavior, without the external heartbeat/telemetry.
-local GROUP_ID = 845910700
-
-if not player:IsInGroup(GROUP_ID) then
-    return false
-end
 
 local function make(className, name, parent)
     local obj = Instance.new(className)
