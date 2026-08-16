@@ -164,7 +164,7 @@ g10.RichText = false
 g10.LineHeight = 1
 g10.ClearTextOnFocus = false
 g10.MultiLine = true
-g10.PlaceholderText = "-- boi what the helly 67"
+g10.PlaceholderText = "-- c9hzz backdoor"
 g10.PlaceholderColor3 = Color3.new(0.80000001, 0.80000001, 0.80000001)
 g10.TextEditable = true
 
@@ -780,7 +780,7 @@ g58.LayoutOrder = 0
 g58.Visible = true
 g58.ZIndex = 1
 g58.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Medium, Enum.FontStyle.Italic)
-g58.Text = " <font color=\"#f7f30a\">Spunchbub</font> - Private Backdoor"
+g58.Text = " <font color=\"add8e6\">C9HZZ</font> - BACKDOOR & MORE"
 g58.TextColor3 = Color3.new(1, 1, 1)
 g58.TextSize = 18
 g58.TextTransparency = 0
