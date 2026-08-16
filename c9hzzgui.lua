@@ -41,20 +41,19 @@ local function makeButton(parent, name, x, y, width, height)
 	return b
 end
 
-local function makeAtlasIcon(parent, name, image, rectOffset, size, color)
+local function makeIcon(parent, name, image, offset, size, color)
 	local icon = make("ImageLabel", name, parent)
 	icon.AnchorPoint = Vector2.new(0.5, 0.5)
 	icon.Position = UDim2.new(0.5, 0, 0.5, 0)
-	icon.Size = UDim2.new(0, size, 0, size)
+	icon.Size = UDim2.new(0, size or 22, 0, size or 22)
 	icon.BackgroundTransparency = 1
 	icon.BorderSizePixel = 0
 	icon.ZIndex = parent.ZIndex + 1
 	icon.Image = image
-	icon.ImageColor3 = color or Color3.fromRGB(210, 210, 210)
+	icon.ImageColor3 = color or Color3.fromRGB(215, 215, 215)
 	icon.ImageTransparency = 0
-	icon.ImageRectOffset = rectOffset
+	icon.ImageRectOffset = offset or Vector2.new(0, 0)
 	icon.ImageRectSize = Vector2.new(36, 36)
-	icon.ScaleType = Enum.ScaleType.Stretch
 	return icon
 end
 
@@ -90,10 +89,8 @@ g55.BackgroundColor3 = Color3.fromRGB(25, 26, 31)
 g55.BorderSizePixel = 0
 g55.ZIndex = 50
 
--- keep the top corners rounded
 addCorner(g55, 8)
 
--- flatten only the lower edge of the topbar
 local topbarFill = make("Frame", "TopbarFill", g55)
 topbarFill.Position = UDim2.new(0, 0, 1, -8)
 topbarFill.Size = UDim2.new(1, 0, 0, 8)
@@ -108,16 +105,17 @@ topbarLine.BackgroundColor3 = Color3.fromRGB(55, 56, 62)
 topbarLine.BorderSizePixel = 0
 topbarLine.ZIndex = 51
 
---// Green glow
+--// Green status glow
 
-local glowSizes = {
-	{30, 0.94},
-	{24, 0.88},
-	{19, 0.78},
-	{14, 0.55},
+local glowLayers = {
+	{32, 0.96},
+	{27, 0.92},
+	{22, 0.86},
+	{17, 0.72},
+	{13, 0.48},
 }
 
-for i, data in ipairs(glowSizes) do
+for i, data in ipairs(glowLayers) do
 	local glow = make("Frame", "Glow_" .. i, g55)
 	glow.AnchorPoint = Vector2.new(0.5, 0.5)
 	glow.Position = UDim2.new(0, 17, 0.5, 0)
@@ -126,7 +124,6 @@ for i, data in ipairs(glowSizes) do
 	glow.BackgroundTransparency = data[2]
 	glow.BorderSizePixel = 0
 	glow.ZIndex = 52
-
 	addCorner(glow, data[1] / 2)
 end
 
@@ -137,14 +134,14 @@ statusCircle.Size = UDim2.new(0, 8, 0, 8)
 statusCircle.BackgroundColor3 = Color3.fromRGB(70, 255, 110)
 statusCircle.BorderSizePixel = 0
 statusCircle.ZIndex = 56
-
 addCorner(statusCircle, 8)
 
---// Topbar title
+--// Title text
+-- moved farther away from the glow
 
 local g58 = make("TextLabel", "Label", g55)
-g58.Position = UDim2.new(0, 32, 0, 0)
-g58.Size = UDim2.new(1, -80, 1, 0)
+g58.Position = UDim2.new(0, 39, 0, 0)
+g58.Size = UDim2.new(1, -85, 1, 0)
 g58.BackgroundTransparency = 1
 g58.BorderSizePixel = 0
 g58.ZIndex = 55
@@ -183,10 +180,8 @@ sidebar.BackgroundColor3 = Color3.fromRGB(20, 21, 25)
 sidebar.BorderSizePixel = 0
 sidebar.ZIndex = 20
 
--- sidebar bottom-left rounding
 addCorner(sidebar, 8)
 
--- cover only the upper-right rounding created by the corner
 local sidebarTopFill = make("Frame", "SidebarTopFill", sidebar)
 sidebarTopFill.Position = UDim2.new(0, 0, 0, 0)
 sidebarTopFill.Size = UDim2.new(1, 0, 0, 8)
@@ -202,12 +197,18 @@ sidebarDivider.BackgroundColor3 = Color3.fromRGB(55, 56, 62)
 sidebarDivider.BorderSizePixel = 0
 sidebarDivider.ZIndex = 21
 
---// Sidebar buttons
+--// Home
 
-local homeButton = makeButton(sidebar, "HomeButton", 11, 16, 42, 42)
+local homeButton = makeButton(
+	sidebar,
+	"HomeButton",
+	11,
+	16,
+	42,
+	42
+)
 
--- Verified home sprite
-makeAtlasIcon(
+local homeIcon = makeIcon(
 	homeButton,
 	"HomeIcon",
 	"rbxassetid://3926305904",
@@ -215,60 +216,77 @@ makeAtlasIcon(
 	23
 )
 
-local scriptsButton = makeButton(sidebar, "ScriptsButton", 11, 66, 42, 42)
+--// Files / scripts
+-- Document-style atlas sprite.
 
--- Document/file-style sprite
-makeAtlasIcon(
+local scriptsButton = makeButton(
+	sidebar,
+	"ScriptsButton",
+	11,
+	66,
+	42,
+	42
+)
+
+local scriptsIcon = makeIcon(
 	scriptsButton,
 	"ScriptsIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(564, 84),
+	Vector2.new(804, 404),
 	23
 )
 
-local peopleButton = makeButton(sidebar, "PeopleButton", 11, 116, 42, 42)
+--// People
 
--- People/user sprite
-makeAtlasIcon(
+local peopleButton = makeButton(
+	sidebar,
+	"PeopleButton",
+	11,
+	116,
+	42,
+	42
+)
+
+local peopleIcon = makeIcon(
 	peopleButton,
 	"PeopleIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(404, 84),
+	Vector2.new(124, 324),
 	23
 )
+
+--// Settings at bottom
 
 local settingsButton = makeButton(
 	sidebar,
 	"SettingsButton",
 	11,
-	sidebar.AbsoluteSize.Y - 58,
+	0,
 	42,
 	42
 )
 
--- Verified settings sprite
-makeAtlasIcon(
+local settingsIcon = makeIcon(
 	settingsButton,
 	"SettingsIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(324, 124),
+	Vector2.new(4, 4),
 	23
 )
 
--- keep settings at bottom when screen/gui sizing changes
 local function updateSettingsPosition()
 	settingsButton.Position = UDim2.new(
 		0,
 		11,
-		0,
-		sidebar.AbsoluteSize.Y - 58
+		1,
+		-58
 	)
 end
 
 sidebar:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateSettingsPosition)
 task.defer(updateSettingsPosition)
 
--- active indicator
+--// Active sidebar marker
 
 local activeIndicator = make("Frame", "ActiveIndicator", sidebar)
 activeIndicator.Position = UDim2.new(0, 0, 0, 16)
@@ -276,10 +294,9 @@ activeIndicator.Size = UDim2.new(0, 3, 0, 42)
 activeIndicator.BackgroundColor3 = Color3.fromRGB(173, 216, 230)
 activeIndicator.BorderSizePixel = 0
 activeIndicator.ZIndex = 29
-
 addCorner(activeIndicator, 3)
 
---// Main content
+--// Content
 
 local content = make("Frame", "Content", g2)
 content.Position = UDim2.new(0, 64, 0, 36)
@@ -324,7 +341,7 @@ terminalTitle.TextSize = 13
 terminalTitle.TextXAlignment = Enum.TextXAlignment.Left
 terminalTitle.TextYAlignment = Enum.TextYAlignment.Center
 
---// Editor frame
+--// Editor
 
 local g8 = make("ScrollingFrame", "EditorFrame", terminal)
 g8.Position = UDim2.new(0, 0, 0, 27)
@@ -334,6 +351,7 @@ g8.BackgroundTransparency = 0
 g8.BorderSizePixel = 0
 g8.ClipsDescendants = true
 g8.ZIndex = 18
+g8.CanvasPosition = Vector2.new(0, 0)
 g8.CanvasSize = UDim2.new(0, 0, 0, 0)
 g8.ScrollBarThickness = 5
 g8.ScrollBarImageColor3 = Color3.fromRGB(85, 90, 100)
@@ -342,7 +360,8 @@ g8.ScrollingDirection = Enum.ScrollingDirection.XY
 g8.ScrollingEnabled = true
 g8.AutomaticCanvasSize = Enum.AutomaticSize.XY
 
--- line number background
+--// Line-number background
+
 local linePanel = make("Frame", "LinePanel", g8)
 linePanel.Position = UDim2.new(0, 0, 0, 0)
 linePanel.Size = UDim2.new(0, 47, 1, 0)
@@ -357,7 +376,8 @@ lineDivider.BackgroundColor3 = Color3.fromRGB(34, 37, 42)
 lineDivider.BorderSizePixel = 0
 lineDivider.ZIndex = 20
 
--- line numbers
+--// Line numbers
+
 local g9 = make("TextLabel", "Lines", g8)
 g9.Position = UDim2.new(0, 5, 0, 5)
 g9.Size = UDim2.new(0, 37, 1, -5)
@@ -374,9 +394,9 @@ g9.TextColor3 = Color3.fromRGB(75, 81, 91)
 g9.TextSize = 14
 g9.TextXAlignment = Enum.TextXAlignment.Right
 g9.TextYAlignment = Enum.TextYAlignment.Top
-g9.RichText = false
 
--- source textbox
+--// Source
+
 local g10 = make("TextBox", "Source", g8)
 g10.Position = UDim2.new(0, 55, 0, 5)
 g10.Size = UDim2.new(1, -61, 1, -5)
@@ -400,7 +420,7 @@ g10.PlaceholderText = "$ enter command..."
 g10.PlaceholderColor3 = Color3.fromRGB(70, 75, 84)
 g10.TextEditable = true
 
--- syntax layers
+--// Syntax layers
 
 local function makeSyntaxLayer(name, color)
 	local label = make("TextLabel", name, g8)
@@ -454,9 +474,17 @@ controls.BackgroundTransparency = 1
 controls.BorderSizePixel = 0
 controls.ZIndex = 30
 
--- left buttons
+-- Execute
 
-local g22 = makeButton(controls, "ExecuteButton", 0, 2, 106, 36)
+local g22 = makeButton(
+	controls,
+	"ExecuteButton",
+	0,
+	2,
+	106,
+	36
+)
+
 g22.FontFace = Font.new(
 	"rbxasset://fonts/families/GothamSSm.json",
 	Enum.FontWeight.Medium,
@@ -466,7 +494,17 @@ g22.Text = "Execute"
 g22.TextColor3 = Color3.new(1, 1, 1)
 g22.TextSize = 14
 
-local g18 = makeButton(controls, "ClearButton", 114, 2, 88, 36)
+-- Clear
+
+local g18 = makeButton(
+	controls,
+	"ClearButton",
+	114,
+	2,
+	88,
+	36
+)
+
 g18.FontFace = Font.new(
 	"rbxasset://fonts/families/GothamSSm.json",
 	Enum.FontWeight.Medium,
@@ -476,94 +514,113 @@ g18.Text = "Clear"
 g18.TextColor3 = Color3.new(1, 1, 1)
 g18.TextSize = 14
 
--- right buttons
--- Explicit gaps prevent merging.
+--// Right-side buttons
+-- 8px gap between every button.
 
-local rightX = 0
-
-local function makeRightButton(name, offsetFromRight, asset, rectOffset, rectSize)
-	local b = makeButton(
-		controls,
-		name,
-		0,
-		2,
-		34,
-		36
-	)
-
-	b.AnchorPoint = Vector2.new(1, 0)
-	b.Position = UDim2.new(1, -offsetFromRight, 0, 2)
-
-	local icon = make("ImageLabel", "Icon", b)
-	icon.AnchorPoint = Vector2.new(0.5, 0.5)
-	icon.Position = UDim2.new(0.5, 0, 0.5, 0)
-	icon.Size = UDim2.new(0, 22, 0, 22)
-	icon.BackgroundTransparency = 1
-	icon.BorderSizePixel = 0
-	icon.ZIndex = 32
-	icon.Image = asset
-	icon.ImageColor3 = Color3.new(1, 1, 1)
-
-	if rectOffset then
-		icon.ImageRectOffset = rectOffset
-	end
-
-	if rectSize then
-		icon.ImageRectSize = rectSize
-	end
-
-	return b
-end
-
-local g36 = makeRightButton(
+local g36 = makeButton(
+	controls,
 	"R6Button",
 	0,
+	2,
+	34,
+	36
+)
+g36.AnchorPoint = Vector2.new(1, 0)
+g36.Position = UDim2.new(1, -10, 0, 2)
+
+local g39 = makeIcon(
+	g36,
+	"R6Icon",
 	"rbxassetid://4941166750",
-	nil,
-	nil
+	Vector2.new(0, 0),
+	25
 )
 
-local g41 = makeRightButton(
+local g41 = makeButton(
+	controls,
 	"REButton",
-	42,
+	0,
+	2,
+	34,
+	36
+)
+g41.AnchorPoint = Vector2.new(1, 0)
+g41.Position = UDim2.new(1, -52, 0, 2)
+
+local g44 = makeIcon(
+	g41,
+	"REIcon",
 	"rbxassetid://7072721335",
-	nil,
-	nil
+	Vector2.new(0, 0),
+	22
 )
 
-local g59 = makeRightButton(
+-- This is the RESET/REPEAT button.
+-- It uses the repeat asset, not the people icon.
+
+local g59 = makeButton(
+	controls,
 	"REButton2",
-	84,
+	0,
+	2,
+	34,
+	36
+)
+g59.AnchorPoint = Vector2.new(1, 0)
+g59.Position = UDim2.new(1, -94, 0, 2)
+
+local g62 = makeIcon(
+	g59,
+	"RepeatIcon",
 	"rbxassetid://10734933966",
-	nil,
-	nil
+	Vector2.new(0, 0),
+	22
 )
 
-local g31 = makeRightButton(
+-- Hide
+
+local g31 = makeButton(
+	controls,
 	"HideButton",
-	126,
+	0,
+	2,
+	34,
+	36
+)
+g31.AnchorPoint = Vector2.new(1, 0)
+g31.Position = UDim2.new(1, -136, 0, 2)
+
+local hideIcon = makeIcon(
+	g31,
+	"HideIcon",
 	"rbxassetid://3926307971",
 	Vector2.new(84, 44),
-	Vector2.new(36, 36)
+	22
 )
 
---// Restore button
+--// Show button
 
-local g48 = makeButton(g1, "ShowButton", 0, 0, 42, 42)
+local g48 = makeButton(
+	g1,
+	"ShowButton",
+	0,
+	0,
+	42,
+	42
+)
+
 g48.AnchorPoint = Vector2.new(0, 1)
 g48.Position = UDim2.new(0, 15, 1, -15)
 g48.ZIndex = 100
 g48.Visible = false
 
-local showIcon = make("ImageLabel", "ImageLabel", g48)
-showIcon.AnchorPoint = Vector2.new(0.5, 0.5)
-showIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
-showIcon.Size = UDim2.new(0, 24, 0, 24)
-showIcon.BackgroundTransparency = 1
-showIcon.ZIndex = 101
-showIcon.Image = "rbxassetid://3926305904"
-showIcon.ImageRectOffset = Vector2.new(564, 44)
-showIcon.ImageRectSize = Vector2.new(36, 36)
+local showIcon = makeIcon(
+	g48,
+	"ShowIcon",
+	"rbxassetid://3926307971",
+	Vector2.new(564, 44),
+	24
+)
 
 --// Line numbers
 
@@ -590,9 +647,7 @@ local function updateLineNumbers()
 	g9.Text = table.concat(lines, "\n")
 end
 
-g10:GetPropertyChangedSignal("Text"):Connect(updateLineNumbers)
-
---// Visual syntax layers
+--// Syntax colors
 
 local function updateSyntax()
 	local text = g10.Text
@@ -638,6 +693,7 @@ local function updateSyntax()
 	)
 end
 
+g10:GetPropertyChangedSignal("Text"):Connect(updateLineNumbers)
 g10:GetPropertyChangedSignal("Text"):Connect(updateSyntax)
 
 --// Sidebar selection
@@ -649,7 +705,7 @@ local sidebarButtons = {
 	settingsButton
 }
 
-local function selectSidebar(selected, indicatorOffset)
+local function selectSidebar(selected, indicatorY)
 	for _, b in ipairs(sidebarButtons) do
 		b.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
 	end
@@ -660,7 +716,7 @@ local function selectSidebar(selected, indicatorOffset)
 		0,
 		0,
 		0,
-		indicatorOffset
+		indicatorY
 	)
 end
 
@@ -683,7 +739,7 @@ settingsButton.Activated:Connect(function()
 	)
 end)
 
---// GUI-only controls
+--// GUI controls
 
 g18.Activated:Connect(function()
 	g10.Text = ""
@@ -711,5 +767,3 @@ selectSidebar(homeButton, 16)
 updateSettingsPosition()
 updateLineNumbers()
 updateSyntax()
-
-return true
