@@ -30,7 +30,7 @@ g2.Position = UDim2.new(0.5, 0, 0.5, 0)
 g2.Size = UDim2.new(0, 600, 0, 310)
 g2.BackgroundColor3 = Color3.fromRGB(26, 27, 32)
 g2.BackgroundTransparency = 0
-g2.BorderSizePixel = 1
+g2.BorderSizePixel = 0
 g2.ClipsDescendants = false
 g2.Visible = true
 g2.ZIndex = 10
@@ -43,143 +43,134 @@ g3.Transparency = 0.5
 local g67 = make("UICorner", "UICorner", g2)
 g67.CornerRadius = UDim.new(0, 6)
 
+--// Sidebar
+-- Separate from the title bar. Does not alter the top bar.
+
+local sidebar = make("Frame", "Sidebar", g2)
+sidebar.Active = false
+sidebar.Position = UDim2.new(0, 7, 0, 35)
+sidebar.Size = UDim2.new(0, 105, 1, -42)
+sidebar.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+sidebar.BackgroundTransparency = 0
+sidebar.BorderSizePixel = 0
+sidebar.ClipsDescendants = true
+sidebar.ZIndex = 12
+
+local sidebarCorner = make("UICorner", "UICorner", sidebar)
+sidebarCorner.CornerRadius = UDim.new(0, 6)
+
+local sidebarStroke = make("UIStroke", "UIStroke", sidebar)
+sidebarStroke.Color = Color3.fromRGB(97, 97, 97)
+sidebarStroke.Thickness = 1
+sidebarStroke.Transparency = 0.5
+
+local sidebarTitle = make("TextLabel", "SidebarTitle", sidebar)
+sidebarTitle.Active = false
+sidebarTitle.Position = UDim2.new(0, 10, 0, 10)
+sidebarTitle.Size = UDim2.new(1, -20, 0, 25)
+sidebarTitle.BackgroundTransparency = 1
+sidebarTitle.BorderSizePixel = 0
+sidebarTitle.ZIndex = 13
+sidebarTitle.FontFace = Font.new(
+	"rbxasset://fonts/families/GothamSSm.json",
+	Enum.FontWeight.Medium,
+	Enum.FontStyle.Normal
+)
+sidebarTitle.Text = "MENU"
+sidebarTitle.TextColor3 = Color3.fromRGB(204, 204, 204)
+sidebarTitle.TextSize = 13
+sidebarTitle.TextXAlignment = Enum.TextXAlignment.Left
+sidebarTitle.TextYAlignment = Enum.TextYAlignment.Center
+
+-- Sidebar buttons
+
+local sidebarExecutor = make("TextButton", "ExecutorTab", sidebar)
+sidebarExecutor.Active = true
+sidebarExecutor.Position = UDim2.new(0, 7, 0, 43)
+sidebarExecutor.Size = UDim2.new(1, -14, 0, 36)
+sidebarExecutor.BackgroundColor3 = Color3.fromRGB(32, 34, 40)
+sidebarExecutor.BackgroundTransparency = 0
+sidebarExecutor.BorderSizePixel = 0
+sidebarExecutor.ZIndex = 13
+sidebarExecutor.FontFace = Font.new(
+	"rbxasset://fonts/families/GothamSSm.json",
+	Enum.FontWeight.Medium,
+	Enum.FontStyle.Normal
+)
+sidebarExecutor.Text = "Executor"
+sidebarExecutor.TextColor3 = Color3.fromRGB(255, 255, 255)
+sidebarExecutor.TextSize = 14
+sidebarExecutor.TextXAlignment = Enum.TextXAlignment.Left
+sidebarExecutor.TextYAlignment = Enum.TextYAlignment.Center
+sidebarExecutor.AutoButtonColor = true
+
+local sidebarExecutorPadding = make("UIPadding", "UIPadding", sidebarExecutor)
+sidebarExecutorPadding.PaddingLeft = UDim.new(0, 10)
+
+local sidebarExecutorCorner = make("UICorner", "UICorner", sidebarExecutor)
+sidebarExecutorCorner.CornerRadius = UDim.new(0, 5)
+
+local sidebarConsole = make("TextButton", "ConsoleTab", sidebar)
+sidebarConsole.Active = true
+sidebarConsole.Position = UDim2.new(0, 7, 0, 85)
+sidebarConsole.Size = UDim2.new(1, -14, 0, 36)
+sidebarConsole.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+sidebarConsole.BackgroundTransparency = 0
+sidebarConsole.BorderSizePixel = 0
+sidebarConsole.ZIndex = 13
+sidebarConsole.FontFace = Font.new(
+	"rbxasset://fonts/families/GothamSSm.json",
+	Enum.FontWeight.Medium,
+	Enum.FontStyle.Normal
+)
+sidebarConsole.Text = "Console"
+sidebarConsole.TextColor3 = Color3.fromRGB(204, 204, 204)
+sidebarConsole.TextSize = 14
+sidebarConsole.TextXAlignment = Enum.TextXAlignment.Left
+sidebarConsole.TextYAlignment = Enum.TextYAlignment.Center
+sidebarConsole.AutoButtonColor = true
+
+local sidebarConsolePadding = make("UIPadding", "UIPadding", sidebarConsole)
+sidebarConsolePadding.PaddingLeft = UDim.new(0, 10)
+
+local sidebarConsoleCorner = make("UICorner", "UICorner", sidebarConsole)
+sidebarConsoleCorner.CornerRadius = UDim.new(0, 5)
+
+local sidebarSettings = make("TextButton", "SettingsTab", sidebar)
+sidebarSettings.Active = true
+sidebarSettings.Position = UDim2.new(0, 7, 0, 127)
+sidebarSettings.Size = UDim2.new(1, -14, 0, 36)
+sidebarSettings.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+sidebarSettings.BackgroundTransparency = 0
+sidebarSettings.BorderSizePixel = 0
+sidebarSettings.ZIndex = 13
+sidebarSettings.FontFace = Font.new(
+	"rbxasset://fonts/families/GothamSSm.json",
+	Enum.FontWeight.Medium,
+	Enum.FontStyle.Normal
+)
+sidebarSettings.Text = "Settings"
+sidebarSettings.TextColor3 = Color3.fromRGB(204, 204, 204)
+sidebarSettings.TextSize = 14
+sidebarSettings.TextXAlignment = Enum.TextXAlignment.Left
+sidebarSettings.TextYAlignment = Enum.TextYAlignment.Center
+sidebarSettings.AutoButtonColor = true
+
+local sidebarSettingsPadding = make("UIPadding", "UIPadding", sidebarSettings)
+sidebarSettingsPadding.PaddingLeft = UDim.new(0, 10)
+
+local sidebarSettingsCorner = make("UICorner", "UICorner", sidebarSettings)
+sidebarSettingsCorner.CornerRadius = UDim.new(0, 5)
+
 --// Executor container
 
 local g4 = make("Frame", "Executor", g2)
 g4.Active = false
-g4.Position = UDim2.new(0, 105, 0, 25)
-g4.Size = UDim2.new(1, -105, 1, -25)
+g4.Position = UDim2.new(0, 119, 0, 25)
+g4.Size = UDim2.new(1, -126, 1, -25)
 g4.BackgroundTransparency = 1
 g4.BorderSizePixel = 0
 g4.ZIndex = 11
-
---// Sidebar
-
-local Sidebar = make("Frame", "Sidebar", g2)
-Sidebar.Active = true
-Sidebar.Position = UDim2.new(0, 0, 0, 25)
-Sidebar.Size = UDim2.new(0, 105, 1, -25)
-Sidebar.BackgroundColor3 = Color3.fromRGB(20, 21, 25)
-Sidebar.BackgroundTransparency = 0
-Sidebar.BorderSizePixel = 0
-Sidebar.ZIndex = 22
-
-local SidebarStroke = make("UIStroke", "UIStroke", Sidebar)
-SidebarStroke.Color = Color3.fromRGB(97, 97, 97)
-SidebarStroke.Thickness = 1
-SidebarStroke.Transparency = 0.5
-
---// Sidebar title
-
-local SidebarTitle = make("TextLabel", "SidebarTitle", Sidebar)
-SidebarTitle.Active = false
-SidebarTitle.Position = UDim2.new(0, 10, 0, 10)
-SidebarTitle.Size = UDim2.new(1, -20, 0, 22)
-SidebarTitle.BackgroundTransparency = 1
-SidebarTitle.BorderSizePixel = 0
-SidebarTitle.ZIndex = 23
-SidebarTitle.FontFace = Font.new(
-	"rbxasset://fonts/families/GothamSSm.json",
-	Enum.FontWeight.Bold,
-	Enum.FontStyle.Normal
-)
-SidebarTitle.Text = "C9HZZ"
-SidebarTitle.TextColor3 = Color3.fromRGB(173, 216, 230)
-SidebarTitle.TextSize = 15
-SidebarTitle.TextXAlignment = Enum.TextXAlignment.Left
-SidebarTitle.TextYAlignment = Enum.TextYAlignment.Center
-
---// Sidebar separator
-
-local SidebarLine = make("Frame", "SidebarLine", Sidebar)
-SidebarLine.Active = false
-SidebarLine.Position = UDim2.new(0, 8, 0, 40)
-SidebarLine.Size = UDim2.new(1, -16, 0, 1)
-SidebarLine.BackgroundColor3 = Color3.fromRGB(97, 97, 97)
-SidebarLine.BackgroundTransparency = 0.5
-SidebarLine.BorderSizePixel = 0
-SidebarLine.ZIndex = 23
-
---// Sidebar button helper
-
-local function createSidebarButton(name, text, y)
-	local button = make("TextButton", name, Sidebar)
-
-	button.Active = true
-	button.Position = UDim2.new(0, 7, 0, y)
-	button.Size = UDim2.new(1, -14, 0, 34)
-	button.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
-	button.BackgroundTransparency = 0
-	button.BorderSizePixel = 0
-	button.ZIndex = 24
-
-	button.FontFace = Font.new(
-		"rbxasset://fonts/families/GothamSSm.json",
-		Enum.FontWeight.Medium,
-		Enum.FontStyle.Normal
-	)
-
-	button.Text = text
-	button.TextColor3 = Color3.fromRGB(204, 204, 204)
-	button.TextSize = 14
-	button.TextXAlignment = Enum.TextXAlignment.Left
-	button.TextYAlignment = Enum.TextYAlignment.Center
-	button.AutoButtonColor = true
-
-	local padding = make("UIPadding", "UIPadding", button)
-	padding.PaddingLeft = UDim.new(0, 10)
-
-	local corner = make("UICorner", "UICorner", button)
-	corner.CornerRadius = UDim.new(0, 5)
-
-	return button
-end
-
-local SidebarHome = createSidebarButton(
-	"HomeButton",
-	"Home",
-	50
-)
-
-local SidebarScripts = createSidebarButton(
-	"ScriptsButton",
-	"Scripts",
-	89
-)
-
-local SidebarSettings = createSidebarButton(
-	"SettingsButton",
-	"Settings",
-	128
-)
-
---// Sidebar selection
-
-local function selectSidebar(button)
-	for _, child in ipairs(Sidebar:GetChildren()) do
-		if child:IsA("TextButton") then
-			child.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
-			child.TextColor3 = Color3.fromRGB(204, 204, 204)
-		end
-	end
-
-	button.BackgroundColor3 = Color3.fromRGB(35, 37, 43)
-	button.TextColor3 = Color3.fromRGB(173, 216, 230)
-end
-
-SidebarHome.MouseButton1Click:Connect(function()
-	selectSidebar(SidebarHome)
-end)
-
-SidebarScripts.MouseButton1Click:Connect(function()
-	selectSidebar(SidebarScripts)
-end)
-
-SidebarSettings.MouseButton1Click:Connect(function()
-	selectSidebar(SidebarSettings)
-end)
-
-selectSidebar(SidebarHome)
 
 --// Editor
 
@@ -231,13 +222,11 @@ g9.Size = UDim2.new(0, 30, 1, 0)
 g9.BackgroundTransparency = 1
 g9.BorderSizePixel = 0
 g9.ZIndex = 14
-
 g9.FontFace = Font.new(
 	"rbxasset://fonts/families/Inconsolata.json",
 	Enum.FontWeight.Regular,
 	Enum.FontStyle.Normal
 )
-
 g9.Text = "1"
 g9.TextColor3 = Color3.new(1, 1, 1)
 g9.TextSize = 15
@@ -255,13 +244,11 @@ g10.BackgroundTransparency = 1
 g10.BorderSizePixel = 0
 g10.ClipsDescendants = false
 g10.ZIndex = 15
-
 g10.FontFace = Font.new(
 	"rbxasset://fonts/families/Inconsolata.json",
 	Enum.FontWeight.Regular,
 	Enum.FontStyle.Normal
 )
-
 g10.Text = ""
 g10.TextColor3 = Color3.fromRGB(204, 204, 204)
 g10.TextSize = 15
@@ -374,23 +361,22 @@ g17.TextSize = 15
 g17.TextXAlignment = Enum.TextXAlignment.Left
 g17.TextYAlignment = Enum.TextYAlignment.Top
 
---// Execute
+--// Bottom controls
+-- Extra spacing prevents buttons from touching.
 
 local g22 = make("TextButton", "ExecuteButton", g4)
 g22.Active = true
-g22.Position = UDim2.new(0.03, 0, 0, 240)
-g22.Size = UDim2.new(0, 130, 0, 33)
+g22.Position = UDim2.new(0, 7, 0, 240)
+g22.Size = UDim2.new(0, 115, 0, 34)
 g22.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
 g22.BackgroundTransparency = 0
 g22.BorderSizePixel = 1
 g22.ZIndex = 20
-
 g22.FontFace = Font.new(
 	"rbxasset://fonts/families/GothamSSm.json",
 	Enum.FontWeight.Medium,
 	Enum.FontStyle.Normal
 )
-
 g22.Text = "Execute"
 g22.TextColor3 = Color3.new(1, 1, 1)
 g22.TextSize = 16
@@ -405,23 +391,19 @@ g24.Color = Color3.fromRGB(97, 97, 97)
 g24.Thickness = 1
 g24.Transparency = 0.5
 
---// Clear
-
 local g18 = make("TextButton", "ClearButton", g4)
 g18.Active = true
-g18.Position = UDim2.new(0.28, 0, 0, 240)
-g18.Size = UDim2.new(0, 100, 0, 34)
+g18.Position = UDim2.new(0, 130, 0, 240)
+g18.Size = UDim2.new(0, 90, 0, 34)
 g18.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
 g18.BackgroundTransparency = 0
 g18.BorderSizePixel = 1
 g18.ZIndex = 20
-
 g18.FontFace = Font.new(
 	"rbxasset://fonts/families/GothamSSm.json",
 	Enum.FontWeight.Medium,
 	Enum.FontStyle.Normal
 )
-
 g18.Text = "Clear"
 g18.TextColor3 = Color3.new(1, 1, 1)
 g18.TextSize = 16
@@ -436,11 +418,95 @@ g20.Color = Color3.fromRGB(97, 97, 97)
 g20.Thickness = 1
 g20.Transparency = 0.5
 
+--// RE button
+
+local g41 = make("TextButton", "REButton", g4)
+g41.Active = true
+g41.Position = UDim2.new(1, -112, 0, 240)
+g41.Size = UDim2.new(0, 34, 0, 34)
+g41.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+g41.BorderSizePixel = 1
+g41.ZIndex = 20
+g41.Text = ""
+
+local g42 = make("UICorner", "UICorner", g41)
+g42.CornerRadius = UDim.new(0, 6)
+
+local g43 = make("UIStroke", "UIStroke", g41)
+g43.Color = Color3.fromRGB(97, 97, 97)
+g43.Thickness = 1
+g43.Transparency = 0.5
+
+local g44 = make("ImageLabel", "ImageLabel", g41)
+g44.Active = false
+g44.AnchorPoint = Vector2.new(0.5, 0.5)
+g44.Position = UDim2.new(0.5, 0, 0.5, 0)
+g44.Size = UDim2.new(0, 22, 0, 22)
+g44.BackgroundTransparency = 1
+g44.ZIndex = 21
+g44.Image = "rbxassetid://7072721335"
+
+--// Additional RE button
+
+local g59 = make("TextButton", "REButton2", g4)
+g59.Active = true
+g59.Position = UDim2.new(1, -70, 0, 240)
+g59.Size = UDim2.new(0, 34, 0, 34)
+g59.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+g59.BorderSizePixel = 1
+g59.ZIndex = 20
+g59.Text = ""
+
+local g60 = make("UICorner", "UICorner", g59)
+g60.CornerRadius = UDim.new(0, 6)
+
+local g61 = make("UIStroke", "UIStroke", g59)
+g61.Color = Color3.fromRGB(97, 97, 97)
+g61.Thickness = 1
+g61.Transparency = 0.5
+
+local g62 = make("ImageLabel", "ImageLabel", g59)
+g62.Active = false
+g62.AnchorPoint = Vector2.new(0.5, 0.5)
+g62.Position = UDim2.new(0.5, 0, 0.5, 0)
+g62.Size = UDim2.new(0, 22, 0, 22)
+g62.BackgroundTransparency = 1
+g62.ZIndex = 21
+g62.Image = "rbxassetid://10734933966"
+
+--// R6
+
+local g36 = make("TextButton", "R6Button", g4)
+g36.Active = true
+g36.Position = UDim2.new(1, -28, 0, 240)
+g36.Size = UDim2.new(0, 34, 0, 34)
+g36.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+g36.BorderSizePixel = 1
+g36.ZIndex = 20
+g36.Text = ""
+
+local g37 = make("UICorner", "UICorner", g36)
+g37.CornerRadius = UDim.new(0, 6)
+
+local g38 = make("UIStroke", "UIStroke", g36)
+g38.Color = Color3.fromRGB(97, 97, 97)
+g38.Thickness = 1
+g38.Transparency = 0.5
+
+local g39 = make("ImageLabel", "ImageLabel", g36)
+g39.Active = false
+g39.AnchorPoint = Vector2.new(0.5, 0.5)
+g39.Position = UDim2.new(0.5, 0, 0.5, 0)
+g39.Size = UDim2.new(0, 27, 0, 27)
+g39.BackgroundTransparency = 1
+g39.ZIndex = 21
+g39.Image = "rbxassetid://4941166750"
+
 --// Hide
 
 local g31 = make("TextButton", "HideButton", g4)
 g31.Active = true
-g31.Position = UDim2.new(0.73, 0, 0, 240)
+g31.Position = UDim2.new(1, -154, 0, 240)
 g31.Size = UDim2.new(0, 34, 0, 34)
 g31.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
 g31.BorderSizePixel = 1
@@ -468,68 +534,12 @@ g34.ImageColor3 = Color3.new(1, 1, 1)
 g34.ImageRectOffset = Vector2.new(84, 44)
 g34.ImageRectSize = Vector2.new(36, 36)
 
---// RE button
-
-local g41 = make("TextButton", "REButton", g4)
-g41.Active = true
-g41.Position = UDim2.new(0.82, 0, 0, 240)
-g41.Size = UDim2.new(0, 34, 0, 34)
-g41.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
-g41.BorderSizePixel = 1
-g41.ZIndex = 20
-g41.Text = ""
-
-local g42 = make("UICorner", "UICorner", g41)
-g42.CornerRadius = UDim.new(0, 6)
-
-local g43 = make("UIStroke", "UIStroke", g41)
-g43.Color = Color3.fromRGB(97, 97, 97)
-g43.Thickness = 1
-g43.Transparency = 0.5
-
-local g44 = make("ImageLabel", "ImageLabel", g41)
-g44.Active = false
-g44.AnchorPoint = Vector2.new(0.5, 0.5)
-g44.Position = UDim2.new(0.5, 0, 0.5, 0)
-g44.Size = UDim2.new(0, 22, 0, 22)
-g44.BackgroundTransparency = 1
-g44.ZIndex = 21
-g44.Image = "rbxassetid://7072721335"
-
---// R6
-
-local g36 = make("TextButton", "R6Button", g4)
-g36.Active = true
-g36.Position = UDim2.new(0.91, 0, 0, 240)
-g36.Size = UDim2.new(0, 34, 0, 34)
-g36.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
-g36.BorderSizePixel = 1
-g36.ZIndex = 20
-g36.Text = ""
-
-local g37 = make("UICorner", "UICorner", g36)
-g37.CornerRadius = UDim.new(0, 6)
-
-local g38 = make("UIStroke", "UIStroke", g36)
-g38.Color = Color3.fromRGB(97, 97, 97)
-g38.Thickness = 1
-g38.Transparency = 0.5
-
-local g39 = make("ImageLabel", "ImageLabel", g36)
-g39.Active = false
-g39.AnchorPoint = Vector2.new(0.5, 0.5)
-g39.Position = UDim2.new(0.5, 0, 0.5, 0)
-g39.Size = UDim2.new(0, 27, 0, 27)
-g39.BackgroundTransparency = 1
-g39.ZIndex = 21
-g39.Image = "rbxassetid://4941166750"
-
 --// Show
 
 local g48 = make("TextButton", "ShowButton", g4)
 g48.Active = true
-g48.Position = UDim2.new(0.73, 0, 0, 240)
-g48.Size = UDim2.new(0, 33, 0, 32)
+g48.Position = UDim2.new(1, -153, 0, 240)
+g48.Size = UDim2.new(0, 34, 0, 34)
 g48.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
 g48.BorderSizePixel = 1
 g48.ZIndex = 20
@@ -571,12 +581,12 @@ g53.ImageRectOffset = Vector2.new(284, 4)
 g53.ImageRectSize = Vector2.new(24, 24)
 
 --// Title
---// Unchanged width/position: sidebar does NOT extend into the title bar.
+-- Remains the original width/position relative to Main.
 
 local g55 = make("Frame", "Title", g4)
 g55.Active = false
-g55.Position = UDim2.new(0, -105, 0, -25)
-g55.Size = UDim2.new(0, 600, 0, 25)
+g55.Position = UDim2.new(0, 7, 0, -25)
+g55.Size = UDim2.new(1, -14, 0, 25)
 g55.BackgroundColor3 = Color3.fromRGB(25, 26, 31)
 g55.BackgroundTransparency = 0
 g55.BorderSizePixel = 1
@@ -597,47 +607,17 @@ g58.Size = UDim2.new(1, -50, 1, 0)
 g58.BackgroundTransparency = 1
 g58.BorderSizePixel = 0
 g58.ZIndex = 21
-
 g58.FontFace = Font.new(
 	"rbxasset://fonts/families/GothamSSm.json",
 	Enum.FontWeight.Medium,
 	Enum.FontStyle.Italic
 )
-
 g58.Text = '<font color="#add8e6">C9HZZ</font> - BACKDOOR & MORE'
 g58.TextColor3 = Color3.new(1, 1, 1)
 g58.TextSize = 18
 g58.TextXAlignment = Enum.TextXAlignment.Left
 g58.TextYAlignment = Enum.TextYAlignment.Center
 g58.RichText = true
-
---// Additional RE button
-
-local g59 = make("TextButton", "REButton2", g4)
-g59.Active = true
-g59.Position = UDim2.new(0.775, 0, 0, 240)
-g59.Size = UDim2.new(0, 34, 0, 34)
-g59.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
-g59.BorderSizePixel = 1
-g59.ZIndex = 20
-g59.Text = ""
-
-local g60 = make("UICorner", "UICorner", g59)
-g60.CornerRadius = UDim.new(0, 6)
-
-local g61 = make("UIStroke", "UIStroke", g59)
-g61.Color = Color3.fromRGB(97, 97, 97)
-g61.Thickness = 1
-g61.Transparency = 0.5
-
-local g62 = make("ImageLabel", "ImageLabel", g59)
-g62.Active = false
-g62.AnchorPoint = Vector2.new(0.5, 0.5)
-g62.Position = UDim2.new(0.5, 0, 0.5, 0)
-g62.Size = UDim2.new(0, 22, 0, 22)
-g62.BackgroundTransparency = 1
-g62.ZIndex = 21
-g62.Image = "rbxassetid://10734933966"
 
 --// Functional GUI-only controls
 
@@ -658,6 +638,41 @@ end)
 
 g53.MouseButton1Click:Connect(function()
 	g1:Destroy()
+end)
+
+--// Sidebar tab selection
+
+sidebarExecutor.MouseButton1Click:Connect(function()
+	sidebarExecutor.BackgroundColor3 = Color3.fromRGB(32, 34, 40)
+	sidebarExecutor.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+	sidebarConsole.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarConsole.TextColor3 = Color3.fromRGB(204, 204, 204)
+
+	sidebarSettings.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarSettings.TextColor3 = Color3.fromRGB(204, 204, 204)
+end)
+
+sidebarConsole.MouseButton1Click:Connect(function()
+	sidebarExecutor.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarExecutor.TextColor3 = Color3.fromRGB(204, 204, 204)
+
+	sidebarConsole.BackgroundColor3 = Color3.fromRGB(32, 34, 40)
+	sidebarConsole.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+	sidebarSettings.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarSettings.TextColor3 = Color3.fromRGB(204, 204, 204)
+end)
+
+sidebarSettings.MouseButton1Click:Connect(function()
+	sidebarExecutor.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarExecutor.TextColor3 = Color3.fromRGB(204, 204, 204)
+
+	sidebarConsole.BackgroundColor3 = Color3.fromRGB(17, 19, 22)
+	sidebarConsole.TextColor3 = Color3.fromRGB(204, 204, 204)
+
+	sidebarSettings.BackgroundColor3 = Color3.fromRGB(32, 34, 40)
+	sidebarSettings.TextColor3 = Color3.fromRGB(255, 255, 255)
 end)
 
 return true
