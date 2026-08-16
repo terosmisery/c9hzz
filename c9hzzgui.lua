@@ -233,7 +233,7 @@ local scriptsIcon = makeIcon(
 	scriptsButton,
 	"ScriptsIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(252, 684),
+	Vector2.new(284, 764),
 	23
 )
 
@@ -252,7 +252,7 @@ local peopleIcon = makeIcon(
 	peopleButton,
 	"PeopleIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(252, 684),
+	Vector2.new(924, 4),
 	23
 )
 
