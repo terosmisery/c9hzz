@@ -252,7 +252,7 @@ local peopleIcon = makeIcon(
 	peopleButton,
 	"PeopleIcon",
 	"rbxassetid://3926307971",
-	Vector2.new(756, 0),
+	Vector2.new(252, 684),
 	23
 )
 
